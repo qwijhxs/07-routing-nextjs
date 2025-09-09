@@ -2,7 +2,7 @@
 
 import css from "./page.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchNotes } from "@/lib/api";
 import { type Note } from "@/types/note";
 import Modal from "@/components/Modal/Modal";
@@ -19,6 +19,18 @@ export default function NotesClient({ tag }: Props) {
     const [query, setQuery] = useState<string>("");
     const [page, setPage] = useState<number>(1);
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+
+ useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedQuery(query);
+            setPage(1);
+        }, 300);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [query]);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ["notes", query, page, tag],
