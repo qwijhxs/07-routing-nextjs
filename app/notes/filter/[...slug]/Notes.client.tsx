@@ -1,15 +1,10 @@
 "use client";
 
 import css from "./page.module.css";
-
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-
 import { useState } from "react";
-
 import { fetchNotes } from "@/lib/api";
-
 import { type Note } from "@/types/note";
-
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import NoteList from "@/components/NoteList/NoteList";
